@@ -1,5 +1,5 @@
 .data
-	v: .space 12
+	v: .space 400 #v[100]
 	n: .word 3
 	sp: .asciiz " "
 .text
