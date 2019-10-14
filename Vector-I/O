@@ -1,6 +1,6 @@
 .data
-	v: .word 15, 239, 34, 998, 342, 998, 324, 998, 24, 13
-	n: .word 10
+	v: .space 12
+	n: .word 3
 	sp: .asciiz " "
 .text
 main:
@@ -8,7 +8,19 @@ main:
 	li $t1, 0
 	li $t2, 0
 
-loop:
+loop_read:
+	bge $t1, $t0, main2
+	li $v0, 5
+	syscall
+	sw $v0, v($t2)
+
+	addi $t1, $t1, 1
+	addi $t2, $t2, 4
+	j loop_read
+main2:
+	li $t1, 0
+	li $t2, 0
+loop_write:
 	bge $t1, $t0, exit
 	lw $a0, v($t2)
 	li $v0, 1
@@ -19,7 +31,7 @@ loop:
 
 	addi $t1, $t1, 1
 	addi $t2, $t2, 4
-	j loop
+	j loop_write
 exit:
 	li $v0, 10
 	syscall
