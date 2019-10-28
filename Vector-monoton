@@ -2,39 +2,38 @@
 	v: .space 400 #v[100]
 	n: .space 4
 	txtSuccess: .asciiz "Elementele sunt in ordine crescatoare"
-	txtFail: .asciiz "Elementele nu sunt in ordine crescatoare, primul index gresit este "
+	txtFail: .asciiz "Primul index gresit este "
 .text
-main:
+read_n:
 	li $v0, 5
 	syscall
 	sw $v0, n
-	lw $t0, n
+main:
+	lw $s0, n
+	li $t0, 0
 	li $t1, 0
-	li $t2, 0
-
 loop_read:
-	bge $t1, $t0, main2
+	bge $t0, $s0, main2
 	li $v0, 5
 	syscall
-	sw $v0, v($t2)
+	sw $v0, v($t1)
 
-	addi $t1, $t1, 1
-	addi $t2, $t2, 4
+	addi $t0, $t0, 1
+	addi $t1, $t1, 4
 	j loop_read
 main2:
-	li $t1, 1
-	li $t2, 4
-	lw $t9, v($0)
-loop:
-	bge $t1, $t0, success
-	lw $t8, v($t2)
+	li $t0, 1
+	li $t1, 4
+	lw $t3, v($0)
+loop_check:
+	bge $t0, $s0, success
+	lw $t4, v($t1)
+	ble $t4, $t3, fail
 	
-	ble $t8, $t9, fail
-	
-	move $t9, $t8
-	addi $t1, $t1, 1
-	addi $t2, $t2, 4
-	j loop
+	move $t3, $t4
+	addi $t0, $t0, 1
+	addi $t1, $t1, 4
+	j loop_check
 success:
 	la $a0, txtSuccess
 	li $v0, 4
@@ -44,9 +43,10 @@ fail:
 	la $a0, txtFail
 	li $v0, 4
 	syscall
-	move $a0, $t1
+	move $a0, $t0
 	li $v0, 1
 	syscall
+	j exit
 exit:
 	li $v0, 10
 	syscall
