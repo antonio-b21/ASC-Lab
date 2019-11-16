@@ -5,24 +5,20 @@
 	nl: .asciiz " "
 .text
 main:
+	subu $sp, $sp, 12
 	lw $t0, z
-	subu $sp, $sp, 4
-	sw $t0, 0($sp)
-	#$sp:(z)
+	sw $t0, 8($sp)
 	lw $t0, y
-	subu $sp, $sp, 4
-	sw $t0, 0($sp)
-	#$sp:(y)(z)
+	sw $t0, 4($sp)
 	lw $t0, x
-	subu $sp, $sp, 4
 	sw $t0, 0($sp)
 	#$sp:(x)(y)(z)
 	jal calcul0
 	addu $sp, $sp, 12
 	
-	la $a0, nl
-	li $v0, 4
-	syscall
+	#la $a0, nl
+	#li $v0, 4
+	#syscall
 	move $a0, $v1
 	li $v0, 1
 	syscall
@@ -30,28 +26,15 @@ main:
 	syscall
 calcul0:
 	#$sp:(x)(y)(z)
-	subu $sp, $sp, 4
-	sw $fp, 0($sp)
-	#$sp:(fp v)(x)(y)(z)
-	addi $fp, $sp, 4
-	#$sp:(fp v)$fp:(x)(y)(z)
-	subu $sp, $sp, 4
-	sw $s0, 0($sp)
-	#$sp:(s0 v)(fp v)$fp:(x)(y)(z)
-	subu $sp, $sp, 4
-	sw $s1, 0($sp)
-	#$sp:(s1 v)(s0 v)(fp v)$fp:(x)(y)(z)
-	subu $sp, $sp, 4
-	sw $s2, 0($sp)
-	#$sp:(s2 v)(s1 v)(s0 v)(fp v)$fp:(x)(y)(z)
-	subu $sp, $sp, 4
-	sw $s3, 0($sp)
-	#$sp:(s3 v)(s2 v)(s1 v)(s0 v)(fp v)$fp:(x)(y)(z)
-	subu $sp, $sp, 4
-	sw $s4, 0($sp)
-	#$sp:(s4 v)(s3 v)(s2 v)(s1 v)(s0 v)(fp v)$fp:(x)(y)(z)
-	subu $sp, $sp, 4
+	subu $sp, $sp, 28
+	sw $fp, 24($sp)
+	sw $s0, 20($sp)
+	sw $s1, 16($sp)
+	sw $s2, 12($sp)
+	sw $s3, 8($sp)
+	sw $s4, 4($sp)
 	sw $s5, 0($sp)
+	addi $fp, $sp, 28
 	#$sp:(s5 v)(s4 v)(s3 v)(s2 v)(s1 v)(s0 v)(fp v)$fp:(x)(y)(z)
 	lw $s0, 0($fp)
 	lw $s1, 4($fp)
@@ -69,12 +52,12 @@ calculLoop1:
 	addi $s4, $s4, 1
 	add $v1, $v1, $s4
 	###############
-	move $a0, $s4
-	li $v0, 1
-	syscall
-	la $a0, nl
-	li $v0, 4
-	syscall
+	#move $a0, $s4
+	#li $v0, 1
+	#syscall
+	#la $a0, nl
+	#li $v0, 4
+	#syscall
 	###############
 	addi $s3, $s3, 1
 	j calculLoop1

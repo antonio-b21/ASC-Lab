@@ -2,12 +2,13 @@
 	x: .word 13
 .text
 main:
-	lw $t0, x
 	subu $sp, $sp, 4
+	lw $t0, x
 	sw $t0, 0($sp)
 	#$sp:(x)
 	jal prim0
 	addu $sp, $sp, 4
+	
 	move $a0, $v1
 	li $v0, 1
 	syscall
@@ -15,24 +16,17 @@ main:
 	syscall
 prim0:
 	#$sp:(x)
-	subu $sp, $sp, 4
-	sw $fp, 0($sp)
-	#$sp:(fp v)(x)
-	addi $fp, $sp, 4
-	#$sp:(fp v)$fp:(x)
-	subu $sp, $sp, 4
-	sw $s0, 0($sp)
-	#$sp:(s0 v)(fp v)$fp:(x)
-	subu $sp, $sp, 4
-	sw $s1, 0($sp)
-	#$sp:(s1 v)(s0 v)(fp v)$fp:(x)
-	subu $sp, $sp, 4
+	subu $sp, $sp, 16
+	sw $fp, 12($sp)
+	sw $s0, 8($sp)
+	sw $s1, 4($sp)
 	sw $s2, 0($sp)
+	addi $fp, $sp, 16
 	#$sp:(s2 v)(s1 v)(s0 v)(fp v)$fp:(x)
 	lw $s0, 0($fp)
-	ble $s0, 1, primIf1
 	li $s1, 2
-	li $v1, 1
+	sgt $v1, $s0, 1
+	beqz $v1, prim1
 primLoop1:
 	bge $s1, $s0, prim1
 	rem $s2, $s0, $s1

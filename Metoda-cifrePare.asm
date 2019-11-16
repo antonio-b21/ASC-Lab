@@ -13,17 +13,11 @@ main:
 	syscall
 evenDigits0:
 	#$sp:(x)
-	subu $sp, $sp, 4
-	sw $fp, 0($sp)
-	#$sp:(fp v)(x)
-	#lw $fp, 4($sp)
-	addi $fp, $sp, 4
-	#$sp:(fp v)$fp:(x)
-	subu $sp, $sp, 4
-	sw $s0, 0($sp)
-	#$sp:(s0 v)(fp v)$fp:(x)
-	subu $sp, $sp, 4
+	subu $sp, $sp, 12
+	sw $fp, 8($sp)
+	sw $s0, 4($sp)
 	sw $s1, 0($sp)
+	addi $fp, $sp, 12
 	#$sp:(s1 v)(s0 v)(fp v)$fp:(x)
 	lw $s0, 0($fp)
 evenDigitsLoop1:
