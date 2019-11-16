@@ -3,11 +3,10 @@
 	n: .space 4
 	sp: .asciiz " "
 .text
-read_n:
+main:
 	li $v0, 5
 	syscall
 	sw $v0, n
-main:
 	lw $s0, n
 	li $t0, 0
 	li $t1, 0

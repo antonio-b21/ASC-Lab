@@ -4,11 +4,10 @@
 	txtSuccess: .asciiz "Elementele sunt in ordine crescatoare"
 	txtFail: .asciiz "Primul index gresit este "
 .text
-read_n:
+main:
 	li $v0, 5
 	syscall
 	sw $v0, n
-main:
 	lw $s0, n
 	li $t0, 0
 	li $t1, 0
@@ -46,7 +45,6 @@ fail:
 	move $a0, $t0
 	li $v0, 1
 	syscall
-	j exit
 exit:
 	li $v0, 10
 	syscall

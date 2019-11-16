@@ -12,7 +12,7 @@ loop:
 	bge $t1,$t0, exit
 	rem $t2, $t0, $t1
 	beq $t2, $0, factor
-continue:
+loopContinue:
 	addi $t1, $t1, 1
 	j loop
 factor:
@@ -22,8 +22,7 @@ factor:
 	la $a0, sp
 	li $v0, 4
 	syscall
-
-	j continue
+	j loopContinue
 exit:
 	li $v0, 10
 	syscall

@@ -33,7 +33,9 @@ sum:
 	#$sp:(s1 v)(s0 v)(fp v)$fp:(x)(y)
 	lw $s0, 0($fp)
 	lw $s1, 4($fp)
+	
 	add $v0, $s0, $s1
+	
 	lw $s1 -12($fp)
 	lw $s0, -8($fp)
 	lw $fp, -4($fp)

@@ -14,23 +14,22 @@ main:
 loop_n:
 	bge $t0, $s0, exit
 	li $t1, 0
+loop_m:
+	bge $t1, $s1, loop_nContinue
+	mul $t2, $t0, $s1
+	add $t2, $t2, $t1
+	mul $t2, $t2, 4
 	
-	loop_m:
-		bge $t1, $s1, continue_loop_n
-		mul $t2, $t0, $s1
-		add $t2, $t2, $t1
-		mul $t2, $t2, 4
-		
-		lw $a0, a($t2)
-		li $v0, 1
-		syscall
-		la $a0, sp
-		li $v0, 4
-		syscall
-		
-		addi $t1, $t1, 1
-		j loop_m
-continue_loop_n:
+	lw $a0, a($t2)
+	li $v0, 1
+	syscall
+	la $a0, sp
+	li $v0, 4
+	syscall
+	
+	addi $t1, $t1, 1
+	j loop_m
+loop_nContinue:
 	la $a0, nl
 	li $v0, 4
 	syscall
