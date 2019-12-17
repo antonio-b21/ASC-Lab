@@ -1,5 +1,5 @@
 .data
-	str: .asciiz "Ana are mere"
+	str: .asciiz "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMONPQRSTUVWXYZ"
 	el: .byte '\0'
 	vow: .asciiz "aeiouAEIOU"
 .text
@@ -60,7 +60,7 @@ eVocala0:
 	sw $s2, 4($sp)
 	sw $s3, 0($sp)
 	addi $fp, $sp, 20
-	#$sp:(s0 v)(fp v)$fp:(str[i])
+	#$sp:(s3 v)(s2 v)(s1 v)(s0 v)(fp v)$fp:(str[i])
 	lw $s0, 0($fp)
 	la $s1, vow
 	lb $s2, el
@@ -69,6 +69,7 @@ eVocalaLoop1:
 	lb $s3, 0($s1)
 	beq $s3, $s2, eVocala1
 	beq $s0, $s3, eVocalaIf1
+	addu $s1, $s1, 1
 	j eVocalaLoop1
 eVocalaIf1:
 	li $v1, 1
